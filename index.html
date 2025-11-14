@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenChem Vision</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Pretendard', sans-serif;
+        background: #f3fbe9;
+        color: #355e2c;
+    }
+
+    header {
+        background: linear-gradient(120deg, #d8f6c8, #b8e8a6);
+        padding: 40px 25px;
+        text-align: center;
+        font-size: 1.7rem;
+        line-height: 1.6;
+        font-weight: 700;
+        border-bottom: 3px solid #a4d68a;
+        position: relative;
+    }
+
+    header::before,
+    header::after {
+        content: "🍃";
+        position: absolute;
+        font-size: 50px;
+        opacity: 0.25;
+    }
+    header::before { left: 20px; top: 15px; }
+    header::after { right: 20px; bottom: 15px; }
+
+    nav {
+        background: #e8f7d9;
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        border-bottom: 2px solid #cfe9bf;
+    }
+
+    nav a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #2e5c1f;
+        padding: 8px 18px;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        background: #ccebb7;
+    }
+
+    section {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        position: relative;
+    }
+
+    section::before {
+        content: "🌿";
+        position: absolute;
+        top: -18px;
+        left: -18px;
+        font-size: 32px;
+        opacity: 0.7;
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #2d5a1a;
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    /* 시뮬레이터 */
+    .sim-box {
+        background: #e9f8db;
+        padding: 25px;
+        border-radius: 20px;
+        margin-top: 25px;
+        border: 2px solid #ccebb7;
+    }
+
+    .sim-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .slider {
+        width: 100%;
+    }
+
+    .result {
+        margin-top: 12px;
+        padding: 16px;
+        background: white;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #d2eac6;
+    }
+
+    /* 그래프 */
+    .graph-box {
+        background: #e9f8db;
+        padding: 25px;
+        border-radius: 20px;
+        margin-top: 35px;
+        border: 2px solid #ccebb7;
+        text-align: center;
+    }
+
+    canvas {
+        margin-top: 15px;
+        background: white;
+        border-radius: 15px;
+        padding: 10px;
+        border: 1px solid #d2eac6;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: #dff1d3;
+        margin-top: 40px;
+        border-top: 2px solid #c3deba;
+        font-size: 0.9rem;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+“화학의 관점에서 생태·환경·기후 문제의 핵심 과제를 파악하고,  
+해결 아이디어를 제시하며 이를 실현할 수 있는 웹페이지 만들기”
+</header>
+
+<nav>
+    <a href="#problem">문제의식</a>
+    <a href="#action">실천 방안</a>
+    <a href="#expected">예상 결과</a>
+</nav>
+
+<!-- ----------------------- 문제의식 ------------------------ -->
+
+<section id="problem">
+    <h2>문제의식</h2>
+
+    <p>
+        현대 사회의 가장 심각한 환경 문제는 ‘오염의 누적’이다. 특히 대기·수질·토양 오염은 
+        단순히 자연 생태계만 훼손하는 것이 아니라, 기후 변화의 속도를 더욱 빠르게 만든다.  
+        이 문제는 시간이 지날수록 회복이 어려워지기 때문에, 오염의 “발생 원인”을 정확하게 
+        분석하고 줄이는 것이 핵심 과제이다.
+    </p>
+
+    <p>
+        화학은 물질의 구조와 반응을 다루는 학문이기 때문에, 오염 물질이 어떤 성질을 가지며  
+        어떻게 분해되거나 축적되는지를 이해할 수 있다. 따라서 화학적 관점은 오염 문제의  
+        원인을 파악하고 해결 방향을 제시하는 데 중요한 역할을 한다.
+    </p>
+
+    <!-- 시뮬레이터 -->
+    <div class="sim-box">
+        <div class="sim-title">🌱 환경 오염도 변화 시뮬레이터</div>
+        <input type="range" min="0" max="100" value="30" class="slider" id="polluteRange">
+        <div class="result" id="simResult">현재 오염도: 30 / 100</div>
+    </div>
+
+    <!-- 그래프 -->
+    <div class="graph-box">
+        <div class="sim-title">🌿 연도별 환경 오염 지수 변화</div>
+        <canvas id="pollutionGraph" width="600" height="300"></canvas>
+    </div>
+</section>
+
+
+<!-- ----------------------- 실천 방안 ------------------------ -->
+
+<section id="action">
+    <h2>실천 방안</h2>
+
+    <p>
+        환경 오염 문제를 해결하기 위해서는 화학 기술과 사회적 참여가 동시에 필요하다.
+    </p>
+
+    <p><b>1) 화학 기반 기술적 실천</b></p>
+    <ul>
+        <li>친환경 촉매를 이용한 대기 오염 물질 분해</li>
+        <li>흡착제·이온교환 수지를 활용한 수질 오염 정화</li>
+        <li>바이오 기반 고분자 소재로 플라스틱 사용량 감소</li>
+        <li>실시간 오염 감지를 위한 센서 기술 활용</li>
+    </ul>
+
+    <p><b>2) 시민 참여 시스템 구축</b></p>
+    <ul>
+        <li>지역 오염 데이터를 실시간 공유하는 공개 플랫폼</li>
+        <li>학교·지역 공동 모니터링 시스템 운영</li>
+        <li>환경 발생량을 줄이기 위한 행동 매뉴얼 보급</li>
+    </ul>
+</section>
+
+
+<!-- ----------------------- 예상 결과 ------------------------ -->
+
+<section id="expected">
+    <h2>예상 결과</h2>
+
+    <p><b>1) 단기적 효과</b></p>
+    <ul>
+        <li>지역별 오염 원인 파악 속도 증가</li>
+        <li>배출량 감소로 대기·수질 오염 수치 완만하게 하락</li>
+        <li>학생·시민의 환경 인식 향상</li>
+    </ul>
+
+    <p><b>2) 장기적 효과</b></p>
+    <ul>
+        <li>탄소 배출 지속적 감소</li>
+        <li>생태계 회복과 도시 자연환경 개선</li>
+        <li>친환경 인프라 확대로 지속 가능한 지역 사회 구축</li>
+    </ul>
+</section>
+
+
+<footer>
+    이 웹사이트는 AI 제작자에 의해 제작되었습니다. 🌱
+</footer>
+
+<script>
+    /* 시뮬레이터 기능 */
+    const slider = document.getElementById("polluteRange");
+    const result = document.getElementById("simResult");
+
+    slider.oninput = function() {
+        result.innerText = `현재 오염도: ${this.value} / 100`;
+    }
+
+    /* 그래프 */
+    const canvas = document.getElementById("pollutionGraph");
+    const ctx = canvas.getContext("2d");
+
+    const points = [60, 65, 70, 82, 90, 95, 100];
+
+    ctx.beginPath();
+    ctx.moveTo(50, 250);
+
+    ctx.strokeStyle = "#6bbf59";
+    ctx.lineWidth = 4;
+
+    let x = 50;
+    points.forEach(v => {
+        ctx.lineTo(x, 300 - v * 2);
+        x += 80;
+    });
+
+    ctx.stroke();
+
+    ctx.fillStyle = "#6bbf59";
+    x = 50;
+    points.forEach(v => {
+        ctx.beginPath();
+        ctx.arc(x, 300 - v * 2, 6, 0, Math.PI * 2);
+        ctx.fill();
+        x += 80;
+    });
+</script>
+
+</body>
+</html>
